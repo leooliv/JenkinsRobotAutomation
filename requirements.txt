@@ -1,0 +1,4 @@
+# requirements.txt
+robotframework==6.1.1
+robotframework-seleniumlibrary==6.1.3
+robotframework-requests==0.9.6

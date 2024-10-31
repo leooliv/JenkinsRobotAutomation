@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 6.1.1 (Python 3.12.2 on win32)" generated="20241030 11:38:06.805" rpa="false" schemaversion="4">
+<suite id="s1" name="Explore Tests" source="C:\Users\leona\OneDrive\Documentos\A_Programming\RobotJenkinsINaturalist\tests\explore_tests.robot">
+<test id="s1-t1" name="Cenário 1: Pesquisar uma espécie" line="9">
+<kw name="Abrir Navegador" library="main" type="SETUP">
+<kw name="Open Browser" library="SeleniumLibrary">
+<arg>${URL}</arg>
+<arg>${BROWSER}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<msg timestamp="20241030 11:38:07.411" level="INFO">Opening browser 'chrome' to base url 'https://www.inaturalist.org'.</msg>
+<status status="PASS" starttime="20241030 11:38:07.396" endtime="20241030 11:38:13.137"/>
+</kw>
+<kw name="Maximize Browser Window" library="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" starttime="20241030 11:38:13.137" endtime="20241030 11:38:13.176"/>
+</kw>
+<status status="PASS" starttime="20241030 11:38:07.396" endtime="20241030 11:38:13.176"/>
+</kw>
+<kw name="Faça uma busca por uma espécie" library="explore_page">
+<arg>Canthon rutilans</arg>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<arg>${SEARCH_BUTTON}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" starttime="20241030 11:38:13.176" endtime="20241030 11:38:13.186"/>
+</kw>
+<kw name="Click Button" library="SeleniumLibrary">
+<arg>${SEARCH_BUTTON}</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<msg timestamp="20241030 11:38:13.186" level="INFO">Clicking button 'xpath= //button[contains(@class, 'show-btn')]'.</msg>
+<status status="PASS" starttime="20241030 11:38:13.186" endtime="20241030 11:38:13.266"/>
+</kw>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<arg>${SEARCH_FIELD}</arg>
+<arg>10s</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" starttime="20241030 11:38:13.266" endtime="20241030 11:38:13.283"/>
+</kw>
+<kw name="Input Text" library="SeleniumLibrary">
+<arg>${SEARCH_FIELD}</arg>
+<arg>${species}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20241030 11:38:13.283" level="INFO">Typing text 'Canthon rutilans' into text field 'xpath= //div[contains(@class, 'searchwrapper')]//input'.</msg>
+<status status="PASS" starttime="20241030 11:38:13.283" endtime="20241030 11:38:13.389"/>
+</kw>
+<kw name="Press Keys" library="SeleniumLibrary">
+<arg>${SEARCH_FIELD}</arg>
+<arg>ENTER</arg>
+<doc>Simulates the user pressing key(s) to an element or on the active browser.</doc>
+<msg timestamp="20241030 11:38:13.389" level="INFO">Sending key(s) ('ENTER',) to xpath= //div[contains(@class, 'searchwrapper')]//input element.</msg>
+<msg timestamp="20241030 11:38:13.661" level="INFO">Pressing special key ENTER to element.</msg>
+<msg timestamp="20241030 11:38:13.661" level="INFO">Releasing special key ENTER.</msg>
+<status status="PASS" starttime="20241030 11:38:13.389" endtime="20241030 11:38:14.966"/>
+</kw>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<arg>${TAXON_RESULTS}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" starttime="20241030 11:38:14.966" endtime="20241030 11:38:14.979"/>
+</kw>
+<kw name="Should Not Be Empty" library="BuiltIn">
+<arg>${TAXON_RESULTS}</arg>
+<doc>Verifies that the given item is not empty.</doc>
+<msg timestamp="20241030 11:38:14.979" level="INFO">Length is 46</msg>
+<status status="PASS" starttime="20241030 11:38:14.979" endtime="20241030 11:38:14.979"/>
+</kw>
+<kw name="Get WebElements" library="SeleniumLibrary">
+<var>${taxon_elements}</var>
+<arg>${TAXON_RESULTS}</arg>
+<doc>Returns a list of WebElement objects matching the ``locator``.</doc>
+<msg timestamp="20241030 11:38:14.988" level="INFO">${taxon_elements} = [&lt;selenium.webdriver.remote.webelement.WebElement (session="264dbac4d3fb5986804ba41da1ed3a0b", element="f.1A0BC5A26A33977189AE2C54E59CC794.d.FDF6378541D1B99B9F54FDF36822F058.e.82")&gt;, &lt;selenium.webdriv...</msg>
+<status status="PASS" starttime="20241030 11:38:14.979" endtime="20241030 11:38:14.989"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${found}</var>
+<arg>False</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20241030 11:38:14.989" level="INFO">${found} = False</msg>
+<status status="PASS" starttime="20241030 11:38:14.989" endtime="20241030 11:38:14.989"/>
+</kw>
+<for flavor="IN">
+<var>${element}</var>
+<value>@{taxon_elements}</value>
+<iter>
+<var name="${element}">&lt;selenium.webdriver.remote.webelement.WebElement (session="264dbac4d3fb5986804ba41da1ed3a0b", element="f.1A0BC5A26A33977189AE2C54E59CC794.d.FDF6378541D1B99B9F54FDF36822F058.e.82")&gt;</var>
+<kw name="Get Text" library="SeleniumLibrary">
+<var>${text}</var>
+<arg>${element}</arg>
+<doc>Returns the text value of the element identified by ``locator``.</doc>
+<msg timestamp="20241030 11:38:15.001" level="INFO">${text} = Canthon rutilans | Ver observações
+Canthon rutilans é um espécies de insetos com 54 observações</msg>
+<status status="PASS" starttime="20241030 11:38:14.989" endtime="20241030 11:38:15.001"/>
+</kw>
+<if>
+<branch type="IF" condition="'$species' in '$text'">
+<kw name="Set Variable" library="BuiltIn">
+<var>${found}</var>
+<arg>True</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20241030 11:38:15.001" endtime="20241030 11:38:15.002"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Species Found</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" starttime="20241030 11:38:15.002" endtime="20241030 11:38:15.002"/>
+</kw>
+<break>
+<status status="NOT RUN" starttime="20241030 11:38:15.002" endtime="20241030 11:38:15.002"/>
+</break>
+<status status="NOT RUN" starttime="20241030 11:38:15.001" endtime="20241030 11:38:15.002"/>
+</branch>
+<status status="PASS" starttime="20241030 11:38:15.001" endtime="20241030 11:38:15.002"/>
+</if>
+<status status="PASS" starttime="20241030 11:38:14.989" endtime="20241030 11:38:15.002"/>
+</iter>
+<iter>
+<var name="${element}">&lt;selenium.webdriver.remote.webelement.WebElement (session="264dbac4d3fb5986804ba41da1ed3a0b", element="f.1A0BC5A26A33977189AE2C54E59CC794.d.FDF6378541D1B99B9F54FDF36822F058.e.83")&gt;</var>
+<kw name="Get Text" library="SeleniumLibrary">
+<var>${text}</var>
+<arg>${element}</arg>
+<doc>Returns the text value of the element identified by ``locator``.</doc>
+<msg timestamp="20241030 11:38:15.006" level="INFO">${text} = Canthon rutilans ssp. cyanescens | Ver observações
+Canthon rutilans cyanescens é um subespécie de insetos com 30 observações</msg>
+<status status="PASS" starttime="20241030 11:38:15.002" endtime="20241030 11:38:15.006"/>
+</kw>
+<if>
+<branch type="IF" condition="'$species' in '$text'">
+<kw name="Set Variable" library="BuiltIn">
+<var>${found}</var>
+<arg>True</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20241030 11:38:15.006" endtime="20241030 11:38:15.006"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Species Found</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" starttime="20241030 11:38:15.006" endtime="20241030 11:38:15.006"/>
+</kw>
+<break>
+<status status="NOT RUN" starttime="20241030 11:38:15.006" endtime="20241030 11:38:15.006"/>
+</break>
+<status status="NOT RUN" starttime="20241030 11:38:15.006" endtime="20241030 11:38:15.006"/>
+</branch>
+<status status="PASS" starttime="20241030 11:38:15.006" endtime="20241030 11:38:15.006"/>
+</if>
+<status status="PASS" starttime="20241030 11:38:15.002" endtime="20241030 11:38:15.006"/>
+</iter>
+<iter>
+<var name="${element}">&lt;selenium.webdriver.remote.webelement.WebElement (session="264dbac4d3fb5986804ba41da1ed3a0b", element="f.1A0BC5A26A33977189AE2C54E59CC794.d.FDF6378541D1B99B9F54FDF36822F058.e.84")&gt;</var>
+<kw name="Get Text" library="SeleniumLibrary">
+<var>${text}</var>
+<arg>${element}</arg>
+<doc>Returns the text value of the element identified by ``locator``.</doc>
+<msg timestamp="20241030 11:38:15.006" level="INFO">${text} = Canthon rutilans ssp. rutilans | Ver observações
+Canthon rutilans rutilans é um subespécie de insetos com 1 observação</msg>
+<status status="PASS" starttime="20241030 11:38:15.006" endtime="20241030 11:38:15.006"/>
+</kw>
+<if>
+<branch type="IF" condition="'$species' in '$text'">
+<kw name="Set Variable" library="BuiltIn">
+<var>${found}</var>
+<arg>True</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20241030 11:38:15.006" endtime="20241030 11:38:15.006"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Species Found</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" starttime="20241030 11:38:15.006" endtime="20241030 11:38:15.006"/>
+</kw>
+<break>
+<status status="NOT RUN" starttime="20241030 11:38:15.006" endtime="20241030 11:38:15.006"/>
+</break>
+<status status="NOT RUN" starttime="20241030 11:38:15.006" endtime="20241030 11:38:15.006"/>
+</branch>
+<status status="PASS" starttime="20241030 11:38:15.006" endtime="20241030 11:38:15.006"/>
+</if>
+<status status="PASS" starttime="20241030 11:38:15.006" endtime="20241030 11:38:15.006"/>
+</iter>
+<status status="PASS" starttime="20241030 11:38:14.989" endtime="20241030 11:38:15.006"/>
+</for>
+<if>
+<branch type="IF" condition="${found} == False">
+<kw name="Log" library="BuiltIn">
+<arg>Species not found</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20241030 11:38:15.006" level="INFO">Species not found</msg>
+<status status="PASS" starttime="20241030 11:38:15.006" endtime="20241030 11:38:15.006"/>
+</kw>
+<status status="PASS" starttime="20241030 11:38:15.006" endtime="20241030 11:38:15.006"/>
+</branch>
+<status status="PASS" starttime="20241030 11:38:15.006" endtime="20241030 11:38:15.006"/>
+</if>
+<status status="PASS" starttime="20241030 11:38:13.176" endtime="20241030 11:38:15.006"/>
+</kw>
+<status status="PASS" starttime="20241030 11:38:07.396" endtime="20241030 11:38:15.006"/>
+</test>
+<status status="PASS" starttime="20241030 11:38:06.805" endtime="20241030 11:38:15.021"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="1" fail="0" skip="0" id="s1" name="Explore Tests">Explore Tests</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
